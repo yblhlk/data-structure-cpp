@@ -50,6 +50,22 @@ public:
 		head = nullptr;
 		size = 0;
 	}
+
+	//析构函数
+	~LinkList()
+	{
+		Node* cur = head;
+		Node* del = cur;
+		while (cur)
+		{
+			del = cur;
+			cur = cur->getNext();
+			delete del;
+			cout << "释放链表结点中。。。" << endl;
+		}
+		size = 0;
+		cout << "==============已释放链表空间==============" << endl;
+	}
 	size_t getSize()
 	{
 		return size;

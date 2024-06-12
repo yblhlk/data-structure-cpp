@@ -58,7 +58,21 @@ public:
 		_head = nullptr;
 		_size = 0;
 	}
-
+	// 析构函数
+	~LinkList()
+	{
+		Node* cur = _head;
+		Node* del = cur;
+		while (cur)
+		{
+			del = cur;
+			cur = cur->getNext();
+			delete del;
+			cout << "释放链表结点中。。。" << endl;
+		}
+		size = 0;
+		cout << "==============已释放链表空间==============" << endl;
+	}
 	// 插入
 	void insert(const T& data, int index)
 	{
