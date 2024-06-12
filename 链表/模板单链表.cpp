@@ -63,6 +63,7 @@ public:
 	{
 		Node* cur = _head;
 		Node* del = cur;
+		cout << "==============准备释放链表空间==============" << endl;
 		while (cur)
 		{
 			del = cur;
@@ -70,7 +71,7 @@ public:
 			delete del;
 			cout << "释放链表结点中。。。" << endl;
 		}
-		size = 0;
+		_size = 0;
 		cout << "==============已释放链表空间==============" << endl;
 	}
 	// 插入
