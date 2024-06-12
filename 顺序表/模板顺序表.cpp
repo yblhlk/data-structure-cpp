@@ -18,22 +18,31 @@ public:
 		_capacity = capacity;
 	}
 
+	// 析构函数
+	~ArrayList()
+	{
+		if (_arr)
+			delete[] _arr;
+		_size = _capacity = 0;
+		cout << "-------------顺序表已被释放------------" << endl;
+	}
+
 	// 扩容
 	void expansion()
 	{
 		if (_size == _capacity)
 		{
-			// a. 创建新数组 (扩容一定要记得改变capacity)
-			_capacity = _capacity == 0 ? 4 : _capacity * 2;
 			try
 			{
+				// a. 创建新数组 (扩容一定要记得改变capacity)
+				_capacity = _capacity == 0 ? 4 : _capacity * 2;
 				T* newarr = new T[_capacity];
 				// b. 拷贝内容到新数组
 				for (int i = 0; i < _size; ++i)
 				{
 					*(newarr + i) = *(_arr + i);
 				}
-				// c. 删除原数组
+				// c. 删除原数组 (加个if判断空指针）
 				if (_arr)
 					delete[](_arr);
 				// d. 改变数组指针指向
