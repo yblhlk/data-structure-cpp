@@ -14,6 +14,7 @@ private:
 	size_t _capacity;
 
 public:
+	typedef char* iterator;
 	static const size_t npos = -1;
 //构造函数:
 	// 构造函数0 : 默认构造函数(不能同时有两个默认构造函数)
@@ -41,21 +42,27 @@ public:
 	MyString& operator= (char c);
 	// 移动赋值：作用是掠夺目标对象的资源。
 	MyString& operator= (MyString&& s) noexcept;
+
+// 迭代器(Iterator)
+	iterator begin();
+	iterator end();
+
+// 容量操作(capacity operation)
+	size_t size() const; //加const是为了让const对象也能使用
+	size_t capacity() const;
+	bool empty() const;
+	void reserve(size_t n);
+	void resize(size_t n, char c = '\0');
+	void clear();
+
+// 元素访问 (Element access)
+	char& operator[] (size_t i); //[]
+	const char& operator[] (size_t i) const; //[]
+	char& at(size_t i); //at()
+	const char& at(size_t i) const; //at()
 };
 
 //参照STL中的string类来写一个MyString：
 //day1.构造函数和析构函数
-
-
-
-
-// 移动构造函数
-// 用来窃取”另一个对象的内部资源，而不是复制它们。这可以显著提高性能。
-// a.“窃取”右值对象的资源。
-// b. 将右值对象置空，确保该对象不再有原来的资源。
-// c. 没有const，且不抛出异常。
-//    std::string s2 = std::move(s1); //会调用string的移动构造函数。
-
-// 现代写法的本质：
-// 复用构造函数来创建一个临时变量，再用自己写的swap进行交换，最后利用析构函数的性质自动释放原资源。
-
+//day2.赋值运算符重载
+//day3.迭代器 & 容量操作

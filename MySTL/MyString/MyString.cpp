@@ -187,3 +187,61 @@ MyString& MyString::operator= (MyString&& s) noexcept
 	swap(s);
 	return *this;
 }
+
+// 4. 迭代器
+MyString::iterator MyString::begin()
+{
+	return _str;
+}
+MyString::iterator MyString::end()
+{
+	return _str + _size; //end是最后一个元素的下一个位置。
+}
+
+// 5.容量操作(capacity operation)
+size_t MyString::size() const  //加const是为了让const对象也能使用
+{
+	return _size;
+}
+size_t MyString::capacity() const 
+{
+	return _capacity;
+}
+bool MyString::empty() const
+{
+	return (_size == 0);
+}
+void MyString::reserve(size_t n)
+{
+	if (n > _size)
+	{
+		char* newstr = new char[n + 1](); // +1 保存 \0
+		strcpy(newstr, _str);
+		delete[] _str;
+		_str = newstr;
+		_capacity = n; //更新容量
+	}
+}
+void MyString::resize(size_t n, char c = '\0')
+{
+	if (n > _size)
+	{
+		reserve(n);//扩容
+		for (int i = _size; i < n; i++)
+		{
+			_str[i] = c;
+		}
+		_size = n;
+		_str[n] = '\0';
+	}
+	else
+	{
+		_str[n] = '\0';
+		_size = n;
+	}
+}
+void MyString::clear()
+{
+	_str[0] = '\0';
+	_size = 0;
+}
