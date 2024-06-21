@@ -60,6 +60,15 @@ public:
 	const char& operator[] (size_t i) const; //[]
 	char& at(size_t i); //at()
 	const char& at(size_t i) const; //at()
+
+// 修改操作(Modifiers):
+	void expansion();
+	void push_back(char c);
+	MyString& append(const MyString& str);
+	MyString& append(const MyString& str, size_t subpos, size_t sublen = npos);
+	MyString& append(const char* s);
+	MyString& append(const char* s, size_t n);
+	MyString& append(size_t n, char c);
 };
 
 //参照STL中的string类来写一个MyString：

@@ -215,10 +215,10 @@ void MyString::reserve(size_t n)
 {
 	if (n > _size)
 	{
-		char* newstr = new char[n + 1](); // +1 保存 \0
-		strcpy(newstr, _str);
+		char* tmp = new char[n + 1](); // +1 保存 \0
+		strcpy(tmp, _str);
 		delete[] _str;
-		_str = newstr;
+		_str = tmp;
 		_capacity = n; //更新容量
 	}
 }
@@ -245,3 +245,107 @@ void MyString::clear()
 	_str[0] = '\0';
 	_size = 0;
 }
+
+// 元素访问 (Element access)
+char& MyString::operator[] (size_t i) //[]
+{
+	assert(i < _size);
+	return _str[i];
+}
+const char& MyString::operator[] (size_t i) const //[]
+{
+	assert(i < _size);
+	return _str[i];
+}
+char& MyString::at(size_t i) //at()
+{
+	assert(i < _size);
+	return _str[i];
+}
+const char& MyString::at(size_t i) const //at()
+{
+	assert(i < _size);
+	return _str[i];
+}
+
+
+// 修改操作(Modifiers):
+void MyString::expansion()
+{
+	if (_size == _capacity)
+	{
+		int newcapacity = (0 == _capacity ? 4 : _capacity * 2);
+		char* tmp = new char[newcapacity +1](); //+1 保存\0
+		strcmp(tmp, _str);
+		delete[] _str;
+		_str = tmp;
+		_capacity = newcapacity;
+	}
+}
+void MyString::push_back(char c)
+{
+	//判断扩容(其实可以复用reserve()的）
+	if(_size == _capacity)
+	{
+		int newcapacity = (0 == _capacity ? 4 : _capacity * 2);
+		reserve(newcapacity);
+	}
+	_str[_size++] = c;
+	_str[_size] = '\0';
+}
+MyString& MyString::append(const MyString& str)
+{
+	int len = _size + str.size();
+	//判断扩容(其实可以复用reserve()的）
+	if (len > _capacity)
+	{
+		int newcapacity = (0 == len ? 4 : len);
+		reserve(len);
+	}
+	for (int i = _size, j = 0; j < str.size(); i++, j++)
+	{
+		_str[i] = str[j];
+	}
+	_str[len] = '\0';
+}
+MyString& MyString::append(const MyString& str, size_t subpos, size_t sublen)
+{
+	assert(subpos < str.size());
+
+	if (sublen == MyString::npos)
+		sublen = str.size() - subpos;
+
+	int len = _size + sublen;
+	//判断扩容(其实可以复用reserve()的）
+	if (len > _capacity)
+	{
+		int newcapacity = (0 == len ? 4 : len);
+		reserve(len);
+	}
+	for (int i = _size, j = subpos; j < subpos + sublen; i++, j++)
+	{
+		_str[i] = str[j];
+	}
+	_str[len] = '\0';
+}
+MyString& MyString::append(const char* s)
+{
+	int len = _size + strlen(s);
+	//判断扩容(其实可以复用reserve()的）
+	if (len > _capacity)
+	{
+		int newcapacity = (0 == len ? 4 : len);
+		reserve(len);
+	}
+	for (int i = _size, j = 0; j < strlen(s); i++, j++)
+	{
+		_str[i] = s[j];
+	}
+	_str[len] = '\0';
+}
+MyString& MyString::append(const char* s, size_t n)
+{
+
+}
+MyString& MyString::append(size_t n, char c)
+{}
